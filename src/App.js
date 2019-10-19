@@ -1,26 +1,40 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from "react";
+import "./App.css";
+import axios from "axios";
+import TableTemplate from "./TableTemplate";
+import {table1Headers} from "./selectors";
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      table1Data: []
+      // table1Data: [],
+      // table1Data: [],
+    };
+  }
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  fetchData() {
+    axios.get("https://jsonplaceholder.typicode.com/posts/1", {})
+      .then(res => {
+        //on success-> update the users state
+        this.setState({
+          table1Data: [res.data]
+        });
+      })
+  }
+
+  componentDidMount() {
+    this.fetchData();  //define similar functions for different api's
+  }
+
+  render() {
+    const {table1Data} = this.state;
+    return (
+      <div className="App">
+        <TableTemplate tableColumnHeader={table1Headers} tableDetails={table1Data}/>
+      </div>
+    );
+  }
 }
 
 export default App;
