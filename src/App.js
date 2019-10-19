@@ -3,6 +3,7 @@ import "./App.css";
 import axios from "axios";
 import TableTemplate from "./TableTemplate";
 import {table1Headers} from "./selectors";
+import MapComponent from "./MapComponent";
 class App extends Component {
   constructor() {
     super();
@@ -29,9 +30,11 @@ class App extends Component {
 
   render() {
     const {table1Data} = this.state;
+    const markers= [{coordinates : {lat:23, lng: 75}, radius: 1000}, {coordinates : {lat:22, lng: 74}, radius: 5000}]
     return (
       <div className="App">
         <TableTemplate tableColumnHeader={table1Headers} tableDetails={table1Data}/>
+        <MapComponent markers={markers} />
       </div>
     );
   }
